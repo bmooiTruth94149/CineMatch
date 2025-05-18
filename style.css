@@ -4,6 +4,7 @@ body, html {
   }
 body{
     padding-top: 56px;
+    background-color: #0d0d0d !important;
 }
 .navbar{
     background-color: #A60842;
@@ -22,7 +23,9 @@ body{
     background-color: #0d0d0d;
     display: flex;
     height: auto;
-    padding: 20px;
+    padding-top: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
 
 }
 .movie, .movie img{
@@ -46,4 +49,9 @@ body{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#registerButton, #singinButton{
+    background-color: #A60842 !important;
+    border: none !important;
 }
