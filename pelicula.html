@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de película</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_KEY = "8734593b5800b5b7ca836222dc3d53a4";
+    </script>
+</head>
+<body class="bg-light">
+
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary-#A60842 fixed-top ">
+            <div class="container-fluid">
+                <a class="navbar-brand my-navbar" id="logo" href="#">CineMatch</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active my-navbar" aria-current="page" href="index.html">Inicio</a>
+                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link my-navbar" href="#">Favoritas</a>
+                            </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link my-navbar dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Género
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                <form class="d-flex" role="search">
+                    <input id="movieInput" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
+                    <button class="btn btn-outline-light" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+            </nav>
+    </header>
+
+    <main class="container" style="padding-top:80px;">
+        <div id="detalle-pelicula" class="container w-100 bg-light"></div>
+
+        <script>
+            // obtener el ID de la peli desde la URL
+            const params = new URLSearchParams(window.location.search);
+            const movieId = params.get('id');
+            const URL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es`;
+            console.log(movieId)
+            
+            // Llamar a la API de TMDB
+            fetch(URL)
+                .then(res => res.json())
+                .then(data => mostrarDetalle(data))
+                .catch(err => console.error('Error al obtener los detalles:', err))
+            //mostrar los detalles
+            function mostrarDetalle(movie) {
+                const container = document.getElementById('detalle-pelicula')
+                container.innerHTML = `
+                    <div class="backdrop" style="background-image: url('https://image.tmdb.org/t/p/w1280${movie.backdrop_path}')">
+                        <div class="container">
+                            <h1>${movie.title}</h1>
+                            <p>${movie.overview}</p>
+                            <p><strong>Fecha de estreno:</strong> ${movie.release_date}</p>
+                            <p><strong>Puntuación:</strong> ⭐ ${movie.vote_average}</p>
+                            <a href="index.html" class="btn btn-secondary mt-3">← Volver</a>
+                        </div>
+                    </div>
+                `;
+            }
+        </script>
+        <div id="details" class="row mb-4"></div>
+
+        <!-- Botón Me gusta -->
+        <button id="btn-like" class="btn btn-outline-danger mb-3">
+            💖 Me gusta
+        </button>
+
+        <!-- Reseñas -->
+        <h3>Reseñas</h3>
+        <ul id="reviews" class="list-group mb-3"></ul>
+
+        <textarea id="review-text" class="form-control mb-2" rows="3"
+                    placeholder="Escribe tu reseña…"></textarea>
+    <button id="btn-add-review" class="btn btn-primary">Publicar reseña</button>
+    </main>
+
+<!-- <script type="module" src="detalle.js"></script> -->
+</body>
+</html>
