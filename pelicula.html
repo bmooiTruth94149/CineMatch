@@ -12,12 +12,12 @@
         const API_KEY = "8734593b5800b5b7ca836222dc3d53a4";
     </script>
 </head>
-<body class="bg-light">
+<body>
 
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary-#A60842 fixed-top ">
+        <nav class="navbar navbar-expand-lg fixed-top ">
             <div class="container-fluid">
-                <a class="navbar-brand my-navbar" id="logo" href="#">CineMatch</a>
+                <a class="navbar-brand my-navbar" id="logo" href="index.html">CineMatch</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -25,40 +25,36 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active my-navbar" aria-current="page" href="index.html">Inicio</a>
-                            </li>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link my-navbar" href="#">Favoritas</a>
-                            </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link my-navbar dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Género
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
                         </li>
                     </ul>
                 <form class="d-flex" role="search">
                     <input id="movieInput" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
                     <button class="btn btn-outline-light" type="submit">Buscar</button>
                 </form>
+                <ul class="navbar-nav me-2">
+                   <li class="nav-item">
+                       <a class="nav-link active my-navbar" aria-current="page" href="login.html">Acceder</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link active my-navbar" aria-current="page" href="registro.html">Registrar</a>
+                   </li>
+                </ul>    
+                </div>
             </div>
-        </div>
-            </nav>
+        </nav>
     </header>
 
-    <main class="container" style="padding-top:80px;">
-        <div id="detalle-pelicula" class="container w-100 bg-light"></div>
-
+    <main class="container-sm">
+        <div id="detalle-pelicula" class="container-fluid-ms px-0"></div>
+        
         <script>
             // obtener el ID de la peli desde la URL
             const params = new URLSearchParams(window.location.search);
             const movieId = params.get('id');
             const URL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es`;
-            console.log(movieId)
             
             // Llamar a la API de TMDB
             fetch(URL)
@@ -67,34 +63,57 @@
                 .catch(err => console.error('Error al obtener los detalles:', err))
             //mostrar los detalles
             function mostrarDetalle(movie) {
-                const container = document.getElementById('detalle-pelicula')
+                const container = document.getElementById('detalle-pelicula');
+                const puntuacion = movie.vote_average.toFixed(1);
                 container.innerHTML = `
-                    <div class="backdrop" style="background-image: url('https://image.tmdb.org/t/p/w1280${movie.backdrop_path}')">
-                        <div class="container">
-                            <h1>${movie.title}</h1>
-                            <p>${movie.overview}</p>
-                            <p><strong>Fecha de estreno:</strong> ${movie.release_date}</p>
-                            <p><strong>Puntuación:</strong> ⭐ ${movie.vote_average}</p>
-                            <a href="index.html" class="btn btn-secondary mt-3">← Volver</a>
+                    <div class="card my-3 bg-dark" style="color: #d9d9d9" >
+                        <div class="row g-0 p-3">
+                            <div class="col-md-4">
+                            <img src="https://image.tmdb.org/t/p/w1280${movie.poster_path}" class="img-fluid rounded " alt="${movie.title}">
+                            </div>
+                            <div class="col-md-8 p-3">
+                                <div class="card-body ">
+                                    <h1 class="card-title">${movie.title}</h1>
+                                    <p class="card-text">${movie.overview}</p>
+                                    <p><strong>Fecha de estreno:</strong> ${movie.release_date}</p>
+                                    <p><strong>Puntuación:</strong> 
+                                        <i class="bi bi-star-fill" style="color: yellow"></i>
+                                         ${puntuacion}</p>
+                                   
+                                    <button class="btn btn-outline-danger">
+                                        <i class="bi bi-heart"></i>
+                                        Me gusta
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
             }
+            
         </script>
-        <div id="details" class="row mb-4"></div>
-
-        <!-- Botón Me gusta -->
-        <button id="btn-like" class="btn btn-outline-danger mb-3">
-            💖 Me gusta
-        </button>
 
         <!-- Reseñas -->
-        <h3>Reseñas</h3>
-        <ul id="reviews" class="list-group mb-3"></ul>
+         <div class="container bg-dark rounded py-2" style="color:aliceblue">
+             <h3>Reseñas</h3>
+             <ul id="reviews" class="list-group mb-3"></ul>
+     
+             <textarea id="review-text" class="form-control mb-2" rows="3"
+                         placeholder="Escribe tu reseña…"></textarea>
+             <button id="btn-add-review" class="btn btn-primary">Publicar reseña</button>
+             <hr>
+             <div id="review">
+                 <div class="card mt-3">
+                     <div class="card-header">
+                       <h5>0 Reseñas Encontradas</h5>
+                     </div>
+                     <div class="card-body">
+                       <p class="card-text">Sé el primero en escribir una reseña.</p>
+                     </div>
+                   </div>
+             </div>
+         </div>
 
-        <textarea id="review-text" class="form-control mb-2" rows="3"
-                    placeholder="Escribe tu reseña…"></textarea>
-    <button id="btn-add-review" class="btn btn-primary">Publicar reseña</button>
     </main>
 
 <!-- <script type="module" src="detalle.js"></script> -->
