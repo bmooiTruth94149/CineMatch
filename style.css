@@ -51,7 +51,18 @@ body{
     text-overflow: ellipsis;
 }
 
-#registerButton, #singinButton{
+#registerButton, #singinButton, #btn-add-review{
     background-color: #A60842 !important;
     border: none !important;
+}
+
+#cartas_peliculas{
+    text-decoration-line: none;
+    background-color: #A60842;
+    border-width: 3px;
+    border-color: #A60842;
+}
+#cartas_peliculas div a{
+    color: #D9D9D9 !important;
+    text-decoration-line: none;
 }

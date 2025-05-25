@@ -8,9 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_KEY = "8734593b5800b5b7ca836222dc3d53a4";
-    </script>
+ 
 </head>
 <body>
 
@@ -50,72 +48,17 @@
     <main class="container-sm">
         <div id="detalle-pelicula" class="container-fluid-ms px-0"></div>
         
-        <script>
-            // obtener el ID de la peli desde la URL
-            const params = new URLSearchParams(window.location.search);
-            const movieId = params.get('id');
-            const URL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es`;
-            
-            // Llamar a la API de TMDB
-            fetch(URL)
-                .then(res => res.json())
-                .then(data => mostrarDetalle(data))
-                .catch(err => console.error('Error al obtener los detalles:', err))
-            //mostrar los detalles
-            function mostrarDetalle(movie) {
-                const container = document.getElementById('detalle-pelicula');
-                const puntuacion = movie.vote_average.toFixed(1);
-                container.innerHTML = `
-                    <div class="card my-3 bg-dark" style="color: #d9d9d9" >
-                        <div class="row g-0 p-3">
-                            <div class="col-md-4">
-                            <img src="https://image.tmdb.org/t/p/w1280${movie.poster_path}" class="img-fluid rounded " alt="${movie.title}">
-                            </div>
-                            <div class="col-md-8 p-3">
-                                <div class="card-body ">
-                                    <h1 class="card-title">${movie.title}</h1>
-                                    <p class="card-text">${movie.overview}</p>
-                                    <p><strong>Fecha de estreno:</strong> ${movie.release_date}</p>
-                                    <p><strong>Puntuación:</strong> 
-                                        <i class="bi bi-star-fill" style="color: yellow"></i>
-                                         ${puntuacion}</p>
-                                   
-                                    <button class="btn btn-outline-danger">
-                                        <i class="bi bi-heart"></i>
-                                        Me gusta
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-        </script>
-
         <!-- Reseñas -->
-         <div class="container bg-dark rounded py-2" style="color:aliceblue">
-             <h3>Reseñas</h3>
-             <ul id="reviews" class="list-group mb-3"></ul>
-     
-             <textarea id="review-text" class="form-control mb-2" rows="3"
-                         placeholder="Escribe tu reseña…"></textarea>
-             <button id="btn-add-review" class="btn btn-primary">Publicar reseña</button>
-             <hr>
-             <div id="review">
-                 <div class="card mt-3">
-                     <div class="card-header">
-                       <h5>0 Reseñas Encontradas</h5>
-                     </div>
-                     <div class="card-body">
-                       <p class="card-text">Sé el primero en escribir una reseña.</p>
-                     </div>
-                   </div>
-             </div>
-         </div>
+         <section id="resena_contenido" class="container bg-dark rounded py-2" style="color:aliceblue">
+            <h3>Reseñas</h3>
+            <textarea id="review-text" class="form-control mb-2" rows="3"
+                        placeholder="Escribe tu reseña…"></textarea>
+            <button id="btn-add-review" class="btn btn-primary">Publicar reseña</button>
+            
+        </section>
 
     </main>
 
-<!-- <script type="module" src="detalle.js"></script> -->
+    <script async type="text/javascript" src="scripts/pelicula_scripts.js"></script>
 </body>
 </html>
